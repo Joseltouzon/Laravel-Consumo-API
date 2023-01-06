@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'showWelcomePage'])->name('welcome');
 
+Route::get('categories/{title}-{id}/products', [App\Http\Controllers\CategoryProductController::class, 'showProducts'])->name('categories.products.show');
+
+Route::get('products/{title}-{id}', [App\Http\Controllers\ProductController::class, 'showProduct'])->name('products.show');
+
 Auth::routes(['register' => false, 'reset' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
