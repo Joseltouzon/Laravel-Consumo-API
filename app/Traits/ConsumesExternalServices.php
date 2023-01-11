@@ -13,8 +13,8 @@ trait ConsumesExternalServices
             'base_uri' => $this->baseUri,
         ]);
 
-        if (method_exists($this, 'resolveAthorization')) {
-            $this->resolveAthorization($queryParams, $formParams, $headers);
+        if (method_exists($this, 'resolveAuthorization')) {
+            $this->resolveAuthorization($queryParams, $formParams, $headers);
         } 
         
         $response = $client->request($method, $requestUrl, [
