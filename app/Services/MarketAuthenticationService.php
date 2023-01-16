@@ -76,6 +76,24 @@ class MarketAuthenticationService
         return $tokenData; 
     }
     
+    public function getPasswordToken($username, $password)
+    {
+        $formParams = [
+            'grant_type' => 'password',
+            'client_id' => $this->passwordClientId,
+            'client_secret' => $this->passwordClientSecret,
+            'username' => $username,
+            'password' => $password,
+            'scope' => 'purchase-product manage-products manage-account read-general',
+        ];
+
+        $tokenData = $this->makeRequest('POST', 'oauth/token', [], $formParams);
+
+        $this->storeValidToken($tokenData, 'password');
+        
+        return $tokenData; 
+    }
+    
     public function storeValidToken($tokenData, $grantType)
     {
         $tokenData->token_expires_at = now()->addSeconds($tokenData->expires_in - 5);
