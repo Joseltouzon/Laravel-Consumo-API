@@ -13,15 +13,19 @@ trait AuthorizesMarketRequests
         $headers['Authorization'] = $accessToken;
     }
 
-    
     public function resolveAccessToken()
     {
 
         $authenticationService = resolve(MarketAuthenticationService::class);
 
+        if (auth()->user()) {
+            return $authenticationService->getAuthenticatedUserToken();
+        }
+
         return $authenticationService->getClientCredencialsToken();
 
     }
+    
     /* va este pero me tira error
     public function resolveAccessToken()
     {

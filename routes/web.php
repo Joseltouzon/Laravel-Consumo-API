@@ -21,8 +21,16 @@ Route::get('categories/{title}-{id}/products', [App\Http\Controllers\CategoryPro
 
 Route::get('products/{title}-{id}', [App\Http\Controllers\ProductController::class, 'showProduct'])->name('products.show');
 
+Route::get('products/{title}-{id}/purchase', [App\Http\Controllers\ProductController::class, 'purchaseProduct'])->name('products.purchase');
+
+Route::get('products/publish', [App\Http\Controllers\ProductController::class, 'showPublishProductForm'])->name('products.publish');
+
+Route::post('products/publish', [App\Http\Controllers\ProductController::class, 'publishProduct']);
+
 Auth::routes(['register' => false, 'reset' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/home/purchases', [App\Http\Controllers\HomeController::class, 'ShowPurchases'])->name('purchases');
 
+Route::get('/home/products', [App\Http\Controllers\HomeController::class, 'showProducts'])->name('products');
