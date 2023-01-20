@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 trait ConsumesExternalServices
 {
 
-    public function makeRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [])
+    public function makeRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [], $hasFile = false)
     {
         $client = new Client([
             'base_uri' => $this->baseUri,
@@ -16,10 +16,22 @@ trait ConsumesExternalServices
         if (method_exists($this, 'resolveAuthorization')) {
             $this->resolveAuthorization($queryParams, $formParams, $headers);
         } 
+
+        $bodyType = 'form_params';
+
+        if ($hasFile) {
+            $bodyType = 'multipart';
+
+            $multipart = [];
+
+            foreach ($formParams as $name => $contents) {
+                $multipart[] = ['name' => $name, 'contents' => $contents];
+            }
+        }
         
         $response = $client->request($method, $requestUrl, [
             'query' => $queryParams,
-            'form_params' => $formParams,
+            $bodyType => $hasFile ? $multipart : $formParams,
             'headers' => $headers,
         ]); 
 

@@ -12,7 +12,7 @@ trait AuthorizesMarketRequests
 
         $headers['Authorization'] = $accessToken;
     }
-
+    
     public function resolveAccessToken()
     {
 

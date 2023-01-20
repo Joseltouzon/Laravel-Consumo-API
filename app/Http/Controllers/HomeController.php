@@ -36,7 +36,11 @@ class HomeController extends Controller
      */
     public function showPurchases(Request $request)
     {
-        //
+       $purchases = $this->marketService->getPurchases($request->user()->service_id);
+
+       return view('purchases')->with([
+        'purchases' => $purchases,
+       ]);
     }
     
     /**
@@ -46,6 +50,10 @@ class HomeController extends Controller
      */
     public function showProducts(Request $request)
     {
-        //
+        $publications = $this->marketService->getPublications($request->user()->service_id);
+
+       return view('publications')->with([
+        'publications' => $publications,
+       ]);
     }
 }
